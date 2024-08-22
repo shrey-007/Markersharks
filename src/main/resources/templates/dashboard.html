@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Supplier Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<div class="container mt-5">
+    <h1>Supplier Search Dashboard</h1>
+    <form action="/api/supplier/query" method="post" class="form-inline">
+        <div class="form-group mb-2">
+            <label for="location" class="sr-only">Location</label>
+            <select id="location" name="location" class="form-control mx-sm-3">
+                <option value="">Select Location</option>
+                <option th:each="location : ${locations}"
+                        th:value="${location}"
+                        th:text="${location}"></option>
+            </select>
+        </div>
+        <div class="form-group mb-2">
+            <label for="businessType" class="sr-only">Nature of Business</label>
+            <select id="businessType" name="businessType" class="form-control mx-sm-3">
+                <option value="">Select Nature of Business</option>
+                <option th:each="businessType : ${businessTypes}"
+                        th:value="${businessType}"
+                        th:text="${businessType}"></option>
+            </select>
+        </div>
+        <div class="form-group mb-2">
+            <label for="process" class="sr-only">Manufacturing Process</label>
+            <select id="process" name="process" class="form-control mx-sm-3">
+                <option value="">Select Manufacturing Process</option>
+                <option th:each="process : ${manufacturingProcesses}"
+                        th:value="${process}"
+                        th:text="${process}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+    </form>
 
+    <div class="mt-5">
+        <h2>Supplier Results:</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Website</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="supplier : ${suppliers}">
+                <td th:text="${supplier.companyName}"></td>
+                <td>
+                    <a th:href="${supplier.website}" th:text="${supplier.website}" target="_blank"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
 </body>
 </html>

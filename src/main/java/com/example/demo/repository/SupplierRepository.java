@@ -11,6 +11,15 @@ public interface SupplierRepository extends JpaRepository<Supplier,Integer> {
 
     // Retrieve a list of X number of manufacturer(s) in a given location, with a specific nature of business, and
     // the capability to perform a specific manufacturing process.
-    List<Supplier> findByLocationAndNatureOfBusinessAndManufacturingProcessesContaining(String location, String natureOfBusiness, String manufacturingProcess);
+    List<Supplier> findByLocationAndNatureOfBusinessAndManufacturingProcesses(String location, String natureOfBusiness, String manufacturingProcess);
+
+    @Query(value = "SELECT DISTINCT location FROM Supplier",nativeQuery = true)
+    List<String> findDistinctLocations();
+
+    @Query(value = "SELECT DISTINCT nature_of_business FROM Supplier ",nativeQuery = true)
+    List<String> findDistinctBusinessTypes();
+
+    @Query(value = "SELECT DISTINCT manufacturing_processes FROM Supplier",nativeQuery = true)
+    List<String> findDistinctManufacturingProcesses();
 
 }
