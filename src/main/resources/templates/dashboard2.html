@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Supplier Dashboard</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h1>Supplier Search Dashboard</h1>
+  <form action="/" method="get">
+    <button type="submit" class="btn btn-primary mb-2">Go to Home</button>
+  </form>
+
+  <div class="mt-5">
+    <h2>Supplier Results:</h2>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Website</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="supplier : ${suppliers}">
+        <td th:text="${supplier.companyName}"></td>
+        <td>
+          <a th:href="${supplier.website}" th:text="${supplier.website}" target="_blank"></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!--  PAGINATION-->
+  <!-- Pagination Links -->
+  <!-- Pagination Links -->
+  <ul class="pagination">
+    <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item d-inline-block">
+      <form th:action="@{'/api/supplier/query/' + ${i-1}}" method="post" class="d-inline">
+        <input type="hidden" name="location" th:value="${selectedLocation}" />
+        <input type="hidden" name="businessType" th:value="${selectedBusinessType}" />
+        <input type="hidden" name="process" th:value="${selectedProcess}" />
+        <button type="submit" th:classappend="${currentPage == i-1 ? 'cus' : ''}" class="page-link">
+          <span th:text="${i}"></span>
+        </button>
+      </form>
+    </li>
+  </ul>
+
+
+
+
+
+</div>
+</body>
+</html>

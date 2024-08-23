@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.Supplier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +14,9 @@ public interface SupplierRepository extends JpaRepository<Supplier,Integer> {
     // Retrieve a list of X number of manufacturer(s) in a given location, with a specific nature of business, and
     // the capability to perform a specific manufacturing process.
     List<Supplier> findByLocationAndNatureOfBusinessAndManufacturingProcesses(String location, String natureOfBusiness, String manufacturingProcess);
+
+    Page<Supplier> findByLocationAndNatureOfBusinessAndManufacturingProcesses(String location, String natureOfBusiness, String manufacturingProcess, Pageable pageable);
+
 
     @Query(value = "SELECT DISTINCT location FROM Supplier",nativeQuery = true)
     List<String> findDistinctLocations();
